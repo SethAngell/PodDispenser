@@ -32,4 +32,10 @@ classDiagram
     Enclosure: +int Length
     Enclosure: +string Type
 ```
+
+
+### Reference Material
+- [RSS Spec](https://help.apple.com/itc/podcasts_connect/#/itcb54353390)
+- [RSS Feed Example](https://help.apple.com/itc/podcasts_connect/#/itcbaf351599)
+- [Artwork Requirements](https://podcasters.apple.com/support/896-artwork-requirements)
     
