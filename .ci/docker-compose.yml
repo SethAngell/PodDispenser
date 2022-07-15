@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  app:
+    image: ghcr.io/sethangell/poddispenser:latest
+    container_name: sethangell.com
+    environment:
+      - DB_NAME
+      - DB_USER
+      - DB_PASS
+      - DB_HOST
+      - DB_PORT
+      - S3_KEY
+      - S3_SECRET_KEY
+      - DJANGO_SECRET_KEY
+    ports:
+      - 8013:8000
+    restart: always 
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://profoundbitching.com"]
+      interval: 200s
+      timeout: 200s
+      retries: 5
+      start_period: 60s
