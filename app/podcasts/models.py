@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 
-from .constants import CATEGORIES, FILETYPES, LANGUAGES, YES_OR_NO
+from .constants import CATEGORIES, FILETYPES, LANGUAGES, TRUE_OR_FALSE, YES_OR_NO
 
 
 # Create your models here.
@@ -27,6 +27,7 @@ class Show(models.Model):
 class Episode(models.Model):
     title = models.CharField(max_length=128)
     file = models.FileField()
+    file_length = models.IntegerField()
     file_type = models.CharField(max_length=20, choices=FILETYPES)
     guid = models.UUIDField(default=uuid.uuid4, editable=False)
     published_date = models.DateTimeField()
@@ -36,3 +37,4 @@ class Episode(models.Model):
     # Itunes Specific Fields
     duration = models.IntegerField()
     image = models.ImageField()
+    explicit = models.CharField(max_length=5, choice=TRUE_OR_FALSE)
