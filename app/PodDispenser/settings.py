@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # Third Party Apps
-    "storages",  # Static File Storage with django-storage
+    "storages",  # Static File Storage with django-storage,
+    "podcasts",
 ]
 
 MIDDLEWARE = [
