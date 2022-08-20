@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     # Third Party Apps
     "storages",  # Static File Storage with django-storage
+    "podcasting",
+    # My Apps
+    "FileUploads",
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,7 @@ ROOT_URLCONF = "PodDispenser.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

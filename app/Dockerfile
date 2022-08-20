@@ -1,5 +1,7 @@
 FROM python:3.9.5-slim-buster
 
+COPY ./django-podcasting-dist.tar.gz /usr/src/bin/django-podcasting-dist.tar.gz
+
 # Set working directory for all following in container commands
 WORKDIR /usr/src/app
 
