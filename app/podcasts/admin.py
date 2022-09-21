@@ -9,7 +9,7 @@ class ShowAdmin(admin.ModelAdmin):
 
 
 class EpisodeAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ("html_description",)
 
 
 admin.site.register(Show, ShowAdmin)

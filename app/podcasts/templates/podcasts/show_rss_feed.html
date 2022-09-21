@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" 
+xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>{{show.title}}</title>
+        <link>{{show.link}}</link>
+        <language>{{show.language}}</language>
+        <itunes:author>{{show.author}}</itunes:author>
+        <description>{{show.description|escape}}</description>
+        <copyright>&#169; {{show.copyright}}</copyright>
+        <itunes:explicit>{{show.explicit}}</itunes:explicit>
+        <itunes:owner>
+            <itunes:name>{{show.owner_name}}</itunes:name>
+            <itunes:email>{{show.owner_email}}</itunes:email>
+        </itunes:owner>
+        <itunes:image>href="{{show.image.url}}"</itunes:image>
+        <itunes:category text="{{show.category}}"></itunes:category>
+        <itunes:block>{{show.block}}</itunes:block>
+        <itunes:complete>{{show.complete}}</itunes:complete>
+
+        {% for episode in episodes %}
+        <item>
+            <title>{{episode.title}}</title>
+            <link>{{episode.parent_show.link}}/{{episode.id}}</link>
+            <description>
+                <![CDATA[{{episode.html_description|safe}}]]>
+            </description>
+            <enclosure
+                length="{{episode.file.file.size}}"
+                type="{{episode.file_type}}"
+                url="{{episode.file.url}}"
+            />
+            <guid>{{episode.guid}}</guid>
+            <pubDate>{{episode.published_date}}</pubDate>
+            {% if episode.image %}
+            <itunes:image>href="{{episode.image.url}}"</itunes:image>
+            {% endif %}
+            <itunes:duration>{{episode.duration}}</itunes:duration>
+            <itunes:explicit>{{episode.explicit}}</itunes:explicit>
+            <itunes:episode>{{episode.show_number}}</itunes:episode>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>

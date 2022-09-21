@@ -1,6 +1,8 @@
 import uuid
 
+import markdown
 from django.db import models
+from django.utils.text import slugify
 
 from .constants import CATEGORIES, FILETYPES, LANGUAGES, TRUE_OR_FALSE, YES_OR_NO
 from .utils import validate_show_art_is_optimally_sized
@@ -9,6 +11,11 @@ from .utils import validate_show_art_is_optimally_sized
 # Create your models here.
 class Show(models.Model):
     title = models.CharField(max_length=128, null=False, blank=False, unique=True)
+    slug_title = models.SlugField(
+        blank=True,
+        null=False,
+        help_text="Slug support if you opt for a multi-show hosting solution",
+    )
     description = models.TextField(max_length=3000, null=False, blank=False)
     language = models.CharField(
         max_length=5, choices=LANGUAGES, null=False, blank=False
@@ -24,7 +31,7 @@ class Show(models.Model):
         help_text="Should be a 3000x3000 square image",
     )
     category = models.CharField(max_length=40, choices=CATEGORIES)
-    explicit = models.BooleanField(default=False)
+    explicit = models.CharField(max_length=5, choices=TRUE_OR_FALSE, default="False")
     author = models.CharField(
         max_length=120,
         help_text="The name of this shows hosts as you'd like them displayed within a podcast directory",
@@ -50,6 +57,10 @@ class Show(models.Model):
     def __str__(self):
         return f"{self.title} by {self.author}"
 
+    def save(self, *args, **kwargs):
+        self.slug_title = slugify(self.title)
+        super(Show, self).save(*args, **kwargs)
+
 
 class Episode(models.Model):
     parent_show = models.ForeignKey(Show, on_delete=models.CASCADE)
@@ -61,6 +72,9 @@ class Episode(models.Model):
         help_text="The publication date of this episode. Used to determine what shows to include in the RSS feed"
     )
     description = models.TextField(max_length=3000)
+    html_description = models.TextField(
+        max_length=4000, editable=False, blank=True, null=False
+    )
     link = models.URLField(
         help_text="Link to a specific page for show notes for this episode"
     )
@@ -79,3 +93,7 @@ class Episode(models.Model):
 
     def __str__(self):
         return f"{self.parent_show} : {self.title}"
+
+    def save(self, *args, **kwargs):
+        self.html_description = markdown.markdown(self.description)
+        super(Episode, self).save(*args, **kwargs)

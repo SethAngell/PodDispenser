@@ -131,6 +131,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+MULTI_SHOW_HOST = False
+SHOW_TITLE = "Test Show"
+
 # =======================================
 # = = = Static and Media Management = = =
 if bool(int(os.environ.get("USE_S3", 0))):
